@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	{% for item in objects %}
+		<h1>{{item.name}}</h1>
+		<ul>
+			<li> Opening Time: {{item.opening_time}}</li>
+			<li> Closing Time: {{item.closing_time}}</li>
+		</ul>
+	{% endfor %}
+</body>
+</html>
