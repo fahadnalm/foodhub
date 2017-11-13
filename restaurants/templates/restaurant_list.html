@@ -1,9 +1,52 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-</head>
-<body>
+{% extends "base.html" %}
+	
+
+
+{% block body %}
+<div class="jumbotron">
+  <h1 class="display-3">These are my restaurants!</h1>
+	<a class="btn btn-primary btn-lg" href="{% url 'create' %}" role="button">Create</a>
+</div>
+	{% for item in restaurant_items %}
+	<div class="card" style="width: 20rem;">
+		{% if item.img %}
+			<img class="card-img-top" src="{{item.img.url}}" alt="Card image cap">
+		{% endif %}
+
+		  <div class="card-body">
+	<ul>
+		<a href="{% url 'detail' restaurant_id=item.id %}"><li> <h4 class="card-title">{{item.title}}</h4></li></a>{{item.created|timesince}}
+		<li>{{item.content}}</li>
+		<li>{{item.id}}</li>
+		<a hred="{% url 'detail' restaurant_id=item.id %}" class="btn btn-info">Read More...</a>
+		<a href="{% url 'update' restaurant_id=item.id %}"><button class="btn btn-primary">Update</button></a>
+		<a href="{% url 'delete' restaurant_id=item.id %}"><button class="btn btn-danger">Delete</button></a>
+	</ul>
+		</div>
+	</div>
+
+	{% endfor %}
+
+	<div class="pagination">
+    <span class="step-links">
+        {% if restaurant_items.has_previous %}
+            <a href="?page={{ restaurant_items.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ restaurant_items.number }} of {{ restaurant_items.paginator.num_pages }}.
+        </span>
+
+        {% if restaurant_items.has_next %}
+            <a href="?page={{ restaurant_items.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+
+
+{% endblock %}
+
+
 	{% for item in objects %}
 		<h1>{{item.name}}</h1>
 		<ul>
@@ -11,5 +54,3 @@
 			<li> Closing Time: {{item.closing_time}}</li>
 		</ul>
 	{% endfor %}
-</body>
-</html>
